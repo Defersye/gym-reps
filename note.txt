@@ -1,0 +1,8 @@
+index.html
+exercise.html
+style.css
+script.js
+exercise.js
+db.js
+server.js
+data/ - папка для базы данных, в ней файл exercises.db
