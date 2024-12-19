@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (todaySets.length === 0) {
          const li = document.createElement("li");
-         li.textContent = "Сегодня ты не занимался, дрищ";
+         li.textContent = "Not even single rep, huh?";
          setsList.appendChild(li);
       } else {
          todaySets

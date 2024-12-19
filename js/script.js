@@ -2,6 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
    const exerciseList = document.getElementById("exercise-list");
    const newExerciseNameInput = document.getElementById("new-exercise-name");
    const addExerciseBtn = document.getElementById("add-exercise-btn");
+   let currentOpenMenu = null;
+
+   function closeAllMenus() {
+      const menus = document.querySelectorAll(".options-menu");
+      menus.forEach((menu) => {
+         menu.style.display = "none";
+      });
+      currentOpenMenu = null;
+   }
+
+   document.addEventListener("click", (event) => {
+      if (!event.target.classList.contains("options-button")) {
+         closeAllMenus();
+      }
+   });
 
    function fetchExercises() {
       fetch("/exercises")
@@ -47,10 +62,23 @@ document.addEventListener("DOMContentLoaded", () => {
                li.appendChild(optionsButton);
                li.appendChild(optionsMenu);
 
-               optionsButton.addEventListener("click", () => {
+               optionsButton.addEventListener("click", (event) => {
+                  event.stopPropagation();
+
+                  if (currentOpenMenu && currentOpenMenu !== optionsMenu) {
+                     currentOpenMenu.style.display = "none";
+                  }
+
                   optionsMenu.style.display =
                      optionsMenu.style.display === "none" ? "block" : "none";
+                  currentOpenMenu =
+                     optionsMenu.style.display === "block" ? optionsMenu : null;
                });
+
+               optionsMenu.addEventListener("click", (event) => {
+                  event.stopPropagation();
+               });
+
                exerciseList.appendChild(li);
             });
          });

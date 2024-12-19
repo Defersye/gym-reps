@@ -111,6 +111,7 @@ input[type="text"] {
    background: var(--black);
    border: 1px solid var(--accent);
    z-index: 10;
+   box-shadow: 0 0 5px #000;
 }
 .options-menu button {
    padding: 5px;
@@ -172,24 +173,20 @@ input[type="text"] {
    background-color: var(--light-black);
    display: grid;
    opacity: 0.9;
-   grid-auto-flow: column;
 }
 .last_sets li {
    padding: 10px 0;
    text-align: center;
-   border-bottom: 1px solid var(--accent);
 }
-/* 1 колонка для менее чем 5 элементов */
-ul:has(li:nth-child(n/3 = 1)) {
-   grid-template-rows: repeat(8, 1fr);
+.last_sets li:not(:nth-child(-n + 3)) {
+   border-top: 1px solid var(--accent);
 }
-
-/* 2 колонки для менее чем 10 элементов */
-ul:has(li:nth-child(6)) {
-   grid-template-rows: repeat(8, 1fr);
+ul:has(li:nth-child(1n)) {
+   grid-template-columns: repeat(1, 1fr);
 }
-
-/* 3 колонки для 10 и более элементов */
-ul:has(li:nth-child(11)) {
-   grid-template-rows: repeat(8, 1fr);
+ul:has(li:nth-child(2n)) {
+   grid-template-columns: repeat(2, 1fr);
+}
+ul:has(li:nth-child(3n)) {
+   grid-template-columns: repeat(3, 1fr);
 }
