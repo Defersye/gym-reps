@@ -95,6 +95,7 @@ input[type="text"] {
    padding-left: 10px;
    opacity: 0.5;
 }
+/* menu */
 .options-button {
    background: none;
    font-size: 12px;
@@ -158,6 +159,7 @@ input[type="text"] {
    /* background-color: var(--light-black);
    border-radius: 500px; */
 }
+/* buttons */
 .btns {
    display: grid;
    grid-template-columns: 1fr repeat(2, auto);
@@ -167,19 +169,51 @@ input[type="text"] {
 .reset-btn {
    background-color: var(--light-black);
 }
-.last_sets {
+/*  tabs */
+.tabs {
    margin-top: 10px;
+   display: flex;
+}
+.tab-btn {
+   padding: 10px 15px;
+   width: 100%;
+   font-weight: 500;
+   background-color: var(--black);
+   cursor: pointer;
+   border-bottom: 2px solid transparent;
+}
+.tab-btn.active {
+   background-color: var(--light-black);
+   border-image: linear-gradient(
+      to right,
+      transparent 20%,
+      var(--accent) 30%,
+      var(--accent) 70%,
+      transparent 80%
+   );
+   border-image-slice: 1;
+}
+/* sets */
+.sets-list {
    padding: 5px;
    background-color: var(--light-black);
    display: grid;
    opacity: 0.9;
 }
-.last_sets li {
+.sets-list li {
    padding: 10px 0;
    text-align: center;
 }
-.last_sets li:not(:nth-child(-n + 3)) {
-   border-top: 1px solid var(--accent);
+.sets-list li:not(:nth-child(-n + 3)) {
+   /* border-top: 1px solid var(--accent); */
+   border-image: linear-gradient(
+      to right,
+      transparent 10%,
+      var(--accent) 20%,
+      var(--accent) 80%,
+      transparent 90%
+   );
+   border-image-slice: 1;
 }
 ul:has(li:nth-child(1n)) {
    grid-template-columns: repeat(1, 1fr);
