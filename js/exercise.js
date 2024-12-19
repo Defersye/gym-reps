@@ -8,20 +8,57 @@ document.addEventListener("DOMContentLoaded", () => {
    const urlParams = new URLSearchParams(window.location.search);
    const exerciseId = urlParams.get("id");
    const bestSetElement = document.createElement("p");
+   const setsList = document.createElement("ul");
 
-   let currentCount = 0; // Счетчик на странице
-   let initialCount = 0; // Изначальное количество из БД
-   let sets = []; // Массив всех сетов
+   let currentCount = 0;
+   let sets = [];
 
    function updateCount(count) {
       countElement.textContent = count;
    }
 
    function updateBestSet(sets) {
-      const bestSet = sets.length > 0 ? Math.max(...sets) : 0;
+      const bestSet =
+         sets.length > 0 ? Math.max(...sets.map((set) => set.value)) : 0;
       bestSetElement.textContent = `Best set: ${bestSet}`;
+      const btns = document.querySelector(".btns");
+      btns.insertBefore(bestSetElement, btns.children[0]);
+   }
+
+   function displaySets(sets) {
+      setsList.innerHTML = "";
+      const today = new Date();
+      const todayStart = new Date(
+         today.getFullYear(),
+         today.getMonth(),
+         today.getDate()
+      ).getTime();
+
+      const todaySets = sets.filter(
+         (set) =>
+            new Date(set.timestamp).getTime() >= todayStart && set.value > 0
+      );
+
+      if (todaySets.length === 0) {
+         const li = document.createElement("li");
+         li.textContent = "Сегодня ты не занимался, дрищ";
+         setsList.appendChild(li);
+      } else {
+         todaySets
+            .slice()
+            .reverse()
+            .forEach((set) => {
+               const setDate = new Date(set.timestamp);
+               const hours = setDate.getHours().toString().padStart(2, "0");
+               const minutes = setDate.getMinutes().toString().padStart(2, "0");
+               const li = document.createElement("li");
+               li.textContent = `${hours}:${minutes} - ${set.value}`;
+               setsList.appendChild(li);
+            });
+      }
       const container = document.querySelector(".container");
-      container.appendChild(bestSetElement);
+      container.appendChild(setsList);
+      setsList.className = "last_sets";
    }
 
    function fetchExercise() {
@@ -29,10 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
          .then((response) => response.json())
          .then((exercise) => {
             exerciseTitle.textContent = exercise.name;
-            initialCount = exercise.count;
-            updateCount(currentCount);
             sets = exercise.sets;
+            updateCount(currentCount);
             updateBestSet(sets);
+            displaySets(sets);
          });
    }
 
@@ -56,20 +93,28 @@ document.addEventListener("DOMContentLoaded", () => {
    });
 
    saveBtn.addEventListener("click", () => {
-      const newCount = initialCount + currentCount;
       fetch(`/exercises/${exerciseId}`, {
          method: "PUT",
          headers: {
             "Content-Type": "application/json",
          },
-         body: JSON.stringify({ count: newCount, set: currentCount }),
+         body: JSON.stringify({ set: currentCount }),
       })
          .then((response) => {
             if (response.ok) {
-               window.location.href = "/";
+               return fetch(`/exercises/${exerciseId}`);
             } else {
-               console.error("Error while saving exercise!");
+               console.error("Error while saving exercise");
+               throw new Error("Error while saving exercise");
             }
+         })
+         .then((response) => response.json())
+         .then((exercise) => {
+            sets = exercise.sets;
+            updateBestSet(sets);
+            displaySets(sets);
+            currentCount = 0;
+            updateCount(currentCount);
          })
          .catch((error) => console.error("Error:", error));
    });

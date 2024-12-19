@@ -12,7 +12,7 @@ function calculateTotalCount(sets) {
    if (!sets || sets.length === 0) {
       return 0;
    }
-   return sets.reduce((sum, set) => sum + set, 0);
+   return sets.reduce((sum, set) => sum + set.value, 0);
 }
 
 // Получение списка упражнений
@@ -96,7 +96,11 @@ app.put("/exercises/:id", (req, res) => {
             res.status(500).send("Server error");
          } else {
             const sets = JSON.parse(row.sets);
-            sets.push(set); // Добавляем новый сет
+            const newSet = {
+               value: set,
+               timestamp: new Date().toISOString(), // Сохраняем время
+            };
+            sets.push(newSet);
             const setsString = JSON.stringify(sets);
             db.run(
                "UPDATE exercises SET sets = ? WHERE id = ?",
