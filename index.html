@@ -5,19 +5,24 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Exercises list</title>
-   <link rel="stylesheet" href="/assets/css/style.css">
+   <link rel="icon" href="/assets/img/temp_favicon.ico">
+   <link rel="stylesheet" href="/assets/css/general.css">
+   <link rel="stylesheet" href="/assets/css/pages.css">
 </head>
 
 <body>
-   <div class="container">
+   <!-- <div class="loader-wrapper">
+      <div class="loader"></div>
+   </div> -->
+   <div class="container index">
       <h1>Exercises list</h1>
       <ul id="exercise-list"></ul>
       <div class="add">
-         <input type="text" id="new-exercise-name" placeholder="New exercise name">
+         <input type="text" id="new-exercise-name" placeholder="New exercise name"
+            onkeypress="if(event.key === 'Enter') document.getElementById('add-exercise-btn').click()">
          <button id="add-exercise-btn" class="btn">Add exercise</button>
       </div>
    </div>
-
    <script src="/js/script.js"></script>
 </body>
 

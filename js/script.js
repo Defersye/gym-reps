@@ -1,3 +1,9 @@
+// window.addEventListener("load", () => {
+//    const loaderWrapper = document.querySelector(".loader-wrapper");
+//    setTimeout(() => {
+//       loaderWrapper.classList.add("fade");
+//    }, 500);
+// });
 document.addEventListener("DOMContentLoaded", () => {
    const exerciseList = document.getElementById("exercise-list");
    const newExerciseNameInput = document.getElementById("new-exercise-name");

@@ -1,63 +1,13 @@
-:root {
-   --white: #fefdfb;
-   --accent: #fc93ad;
-   --light-black: #353535;
-   --black: #1f1f1f;
-}
-* {
-   margin: 0;
-   padding: 0;
-   outline: none;
-   border: none;
-   text-decoration: none;
-   box-sizing: border-box;
-   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-   font-size: 16px;
-   line-height: 1;
-   list-style: none;
-   color: inherit;
-}
-body::-webkit-scrollbar {
-   display: none;
-}
-html {
-   height: 100vh;
-   width: 100vw;
-}
-
-body {
-   height: 100%;
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: flex-start;
-   background-color: var(--black);
-   color: var(--white);
-}
-.container {
-   margin-bottom: 20px;
-   padding: 20px;
-   height: fit-content;
-   min-width: 300px;
-   display: grid;
-   grid-template-rows: auto 1fr auto;
-   background-color: #171717;
-}
-h1,
-h2 {
-   font-size: 32px;
-   font-weight: 600;
-}
-input[type="text"] {
-   padding: 5px;
-   background: none;
-   border-bottom: 1px solid var(--white);
-}
-
 /* index */
-#new-exercise-name {
-   margin: 10px 0;
+.container.index {
+   grid-template-rows: auto 1fr auto;
+}
+.add {
+   margin-top: 20px;
+   display: grid;
+   grid-template-columns: 1fr auto;
+   height: auto;
+   gap: 10px;
 }
 .btn {
    padding: 10px 20px;
@@ -98,17 +48,19 @@ input[type="text"] {
 /* menu */
 .options-button {
    background: none;
-   font-size: 12px;
    letter-spacing: 1px;
    -webkit-text-security: disc;
    opacity: 0.5;
    cursor: pointer;
 }
+.options-button:hover {
+   opacity: 1;
+}
 .options-menu {
    display: none;
    position: absolute;
    top: 0;
-   right: 30px;
+   right: 40px;
    background: var(--black);
    border: 1px solid var(--accent);
    z-index: 10;
@@ -129,8 +81,12 @@ input[type="text"] {
 }
 
 /* exercise */
+.container.exercise {
+   grid-template-rows: repeat(3, auto) 1fr;
+}
 .count-box {
    margin: 20px 0;
+   min-height: 150px;
    display: flex;
    justify-content: center;
    align-items: center;
