@@ -78,6 +78,14 @@ document.addEventListener("DOMContentLoaded", () => {
             return acc;
          }, {});
 
+         // Display message if no sets available
+         if (Object.keys(groupedSets).length === 0) {
+            const li = document.createElement("li");
+            li.textContent = "At least try!";
+            setsList.appendChild(li);
+            return;
+         }
+
          // Display daily totals
          Object.entries(groupedSets)
             .sort((a, b) => new Date(b[0]) - new Date(a[0]))
@@ -161,7 +169,13 @@ document.addEventListener("DOMContentLoaded", () => {
          .then((exercise) => {
             sets = exercise.sets;
             updateBestSet(sets);
-            displaySets(sets);
+            document.querySelectorAll(".tab-btn").forEach((btn) => {
+               btn.classList.remove("active");
+               if (btn.dataset.tab === "today") {
+                  btn.classList.add("active");
+               }
+            });
+            displaySets(sets, "today");
             currentCount = 0;
             updateCount(currentCount);
          })
